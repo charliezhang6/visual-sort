@@ -1,0 +1,82 @@
+# Project: visual-sort
+# Makefile created by Dev-C++ 5.5.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = imgui/exception.o imgui/genlib.o imgui/graphics.o imgui/imgui.o imgui/random.o imgui/simpio.o imgui/strlib.o about-view.o bubble-sorter.o insertion-sorter.o main.o main-view.o menubar.o merge-sorter.o quick-sorter.o sorter.o utility.o view.o select-sorter.o
+LINKOBJ  = imgui/exception.o imgui/genlib.o imgui/graphics.o imgui/imgui.o imgui/random.o imgui/simpio.o imgui/strlib.o about-view.o bubble-sorter.o insertion-sorter.o main.o main-view.o menubar.o merge-sorter.o quick-sorter.o sorter.o utility.o view.o select-sorter.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -mwindows -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"./imgui"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.7.1/include/c++" -I"./imgui"
+BIN      = visual-sort.exe
+CXXFLAGS = $(CXXINCS) -g3 -std=c99
+CFLAGS   = $(INCS) -g3 -std=c99
+RM       = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+imgui/exception.o: imgui/exception.c
+	$(CC) -c imgui/exception.c -o imgui/exception.o $(CFLAGS)
+
+imgui/genlib.o: imgui/genlib.c
+	$(CC) -c imgui/genlib.c -o imgui/genlib.o $(CFLAGS)
+
+imgui/graphics.o: imgui/graphics.c
+	$(CC) -c imgui/graphics.c -o imgui/graphics.o $(CFLAGS)
+
+imgui/imgui.o: imgui/imgui.c
+	$(CC) -c imgui/imgui.c -o imgui/imgui.o $(CFLAGS)
+
+imgui/random.o: imgui/random.c
+	$(CC) -c imgui/random.c -o imgui/random.o $(CFLAGS)
+
+imgui/simpio.o: imgui/simpio.c
+	$(CC) -c imgui/simpio.c -o imgui/simpio.o $(CFLAGS)
+
+imgui/strlib.o: imgui/strlib.c
+	$(CC) -c imgui/strlib.c -o imgui/strlib.o $(CFLAGS)
+
+about-view.o: about-view.c
+	$(CC) -c about-view.c -o about-view.o $(CFLAGS)
+
+bubble-sorter.o: bubble-sorter.c
+	$(CC) -c bubble-sorter.c -o bubble-sorter.o $(CFLAGS)
+
+insertion-sorter.o: insertion-sorter.c
+	$(CC) -c insertion-sorter.c -o insertion-sorter.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+main-view.o: main-view.c
+	$(CC) -c main-view.c -o main-view.o $(CFLAGS)
+
+menubar.o: menubar.c
+	$(CC) -c menubar.c -o menubar.o $(CFLAGS)
+
+merge-sorter.o: merge-sorter.c
+	$(CC) -c merge-sorter.c -o merge-sorter.o $(CFLAGS)
+
+quick-sorter.o: quick-sorter.c
+	$(CC) -c quick-sorter.c -o quick-sorter.o $(CFLAGS)
+
+sorter.o: sorter.c
+	$(CC) -c sorter.c -o sorter.o $(CFLAGS)
+
+utility.o: utility.c
+	$(CC) -c utility.c -o utility.o $(CFLAGS)
+
+view.o: view.c
+	$(CC) -c view.c -o view.o $(CFLAGS)
+
+select-sorter.o: select-sorter.c
+	$(CC) -c select-sorter.c -o select-sorter.o $(CFLAGS)
