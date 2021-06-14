@@ -957,7 +957,7 @@ type: 数据类型
 
  
 
-  `bool save_nums(char const *ofile, double const *nums, int size, int type);`
+ `bool save_nums(char const *ofile, double const *nums, int size, int type);`
 
 存储数据到文件，内部首先打开文件为输出流ostream，然后调用save_nums_at()实现真正的存储操作。
 
