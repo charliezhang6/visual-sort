@@ -29,7 +29,7 @@ menu: 指的是菜单栏或者菜单下拉框。
 
 ## 数据结构设计
 
-主要的数据结构有视图相关的`` view_t`、`main_view_t`和`about_view_t`、排序算法相关的`sorter_t`、`bubble_sorter_t`、`quick_sorter_t`、`merge_sorter_t`、`insertion_sorter_t`和`select_sorter_t`。
+主要的数据结构有视图相关的` view_t`、`main_view_t`和`about_view_t`、排序算法相关的`sorter_t`、`bubble_sorter_t`、`quick_sorter_t`、`merge_sorter_t`、`insertion_sorter_t`和`select_sorter_t`。
 
 `view_t `结构体定义如下：
 
@@ -41,7 +41,7 @@ struct view_t {
 };
 ```
 
-其中``name`是视图名字，后续通过此名字来确定视图。`display`是函数指针，指向一个所谓的显示函数，用于把确定如何把此视图内容呈现到屏幕上，`destroy`是也是函数指针用于释放自定义视图的内存。具体如何工作起来的见下文对`main_view`和`about_view_t`的分析。
+其中`name`是视图名字，后续通过此名字来确定视图。`display`是函数指针，指向一个所谓的显示函数，用于把确定如何把此视图内容呈现到屏幕上，`destroy`是也是函数指针用于释放自定义视图的内存。具体如何工作起来的见下文对`main_view`和`about_view_t`的分析。
 
 `main_view_t`这是最为主要的视图，也就是排序页面的视图，定义如下：
 
@@ -118,13 +118,13 @@ struct sorter_t {
 };
 ```
 
-`nums`和``size`都是用于记录排序的数据的信息的，`nums_back`是对未排序前的`nums`的数据的备份，用于实现重新排序的功能。正如注释提到的一样 `nums `指向的内存所有权不是`sorter_t`的而是外部的，需要外界释放内容，但是`nums_back`是此结构体分配的，所以需要自己释放。`min`和`max`分别记录数据中的最大值和最小值，用于后面绘图时使用。type表示被排序的数据类型取值为`SORTER_INT`、`SORTER_FLOAT`、`SORTER_DOUBLE`分别表示int类型，float类型和double类型的数据。
+`nums`和`size`都是用于记录排序的数据的信息的，`nums_back`是对未排序前的`nums`的数据的备份，用于实现重新排序的功能。正如注释提到的一样 `nums `指向的内存所有权不是`sorter_t`的而是外部的，需要外界释放内容，但是`nums_back`是此结构体分配的，所以需要自己释放。`min`和`max`分别记录数据中的最大值和最小值，用于后面绘图时使用。type表示被排序的数据类型取值为`SORTER_INT`、`SORTER_FLOAT`、`SORTER_DOUBLE`分别表示int类型，float类型和double类型的数据。
 
 `speed`记录可视化排序过程的快慢，每秒多少步。``frame_cnt`记录从上一步到现在界面刷新了多少帧（多少次画面）。`state`记录排序算法的状态，取值有`SORTER_UNREADY`，表示排序算法为准备好，也就是数据没有被提供；`SORTER_READY`表示排序算法准备好了，下一步可以进行排序；`SORTER_SORTING`表示算法正在排序过程中；`SORTER_PAUSED`表示排序算法被暂停，后续可以恢复继续排序；`SORTER_SORTED`表示排序过程结束，数据已经排好序了。`ascend`表示排序的顺序，升序还是降序，当`ascend`为真表示按照升序排序（也是默认排序方式），当`ascend`为假表示按照降序排序。
 
 函数指针`next_step`用于记录子结构的实现下一步操作的函数的地址；`display`用于实现如何可视化排序的内部情况；`restart`用于重新操作结构体内部变量，实现重新排序的功能；`destroy`用于记录如何释放结构体内存；`save_state`用于存储当前状态到文件里。
 
-bubble_sorter_t结构体是sorter_t的子结构体，是对冒泡排序算法的具体实现：
+`bubble_sorter_t`结构体是`sorter_t`的子结构体，是对冒泡排序算法的具体实现：
 
 ```c
 typedef struct bubble_sorter_t {
