@@ -1,4 +1,5 @@
 # visual-sort
+
 基于libgraphics和imgui的排序可视化算法
 
 ### 术语说明
@@ -64,7 +65,7 @@ int type;
 } main_view_t;
 ```
 
-可以看见``main_view_t`结构体内嵌了`view_t`结构体，取名为` base `意味基类，这样可以让`main_view_t`具有`view_t`的性质；`sorter`的指针指向一个排序算法结构体，用于表明当前使用什么排序算法，具体来说可能是冒泡排序、快速排序、选择排序、归并排序、插入排序。`src_idx`是用于表明数据来源选择的是哪一个，取值为`DATASRC_RANDOM`表示随机生成，`DATASRC_ASCEND`表示随机生成升序数据，`DATASRC_DESCEND`表示随机生成降序数据，`DATASRC_LOADFILE`表示数据从文件加载，具体从当前目录下的“input.txt”读取数据；`nums`指针和`size`表明当前生成或加载的数据数组的地址和大小；`type`表示数据类型，可以取值为`SORTER_INT` 表明数据类型是整数，`SORTER_FLOAT`表示数据类型是浮点数，`SORTER_DOUBLE`表示数据类型是双精度浮点数；`size_text`是为了从界面上交互显示并输入`size`大小的缓冲区，最大长度为`SIZE_TEXT_MAX`长。这里常量使用 `enum`而不是通常的`#define`宏来定义，是为了方便编译后方便调试时具有符号，而不是简简单单的数字。
+可以看见`main_view_t`结构体内嵌了`view_t`结构体，取名为` base `意味基类，这样可以让`main_view_t`具有`view_t`的性质；`sorter`的指针指向一个排序算法结构体，用于表明当前使用什么排序算法，具体来说可能是冒泡排序、快速排序、选择排序、归并排序、插入排序。`src_idx`是用于表明数据来源选择的是哪一个，取值为`DATASRC_RANDOM`表示随机生成，`DATASRC_ASCEND`表示随机生成升序数据，`DATASRC_DESCEND`表示随机生成降序数据，`DATASRC_LOADFILE`表示数据从文件加载，具体从当前目录下的“input.txt”读取数据；`nums`指针和`size`表明当前生成或加载的数据数组的地址和大小；`type`表示数据类型，可以取值为`SORTER_INT` 表明数据类型是整数，`SORTER_FLOAT`表示数据类型是浮点数，`SORTER_DOUBLE`表示数据类型是双精度浮点数；`size_text`是为了从界面上交互显示并输入`size`大小的缓冲区，最大长度为`SIZE_TEXT_MAX`长。这里常量使用 `enum`而不是通常的`#define`宏来定义，是为了方便编译后方便调试时具有符号，而不是简简单单的数字。
 
 `about_view_t`结构体很简单
 
@@ -120,7 +121,7 @@ struct sorter_t {
 
 `nums`和`size`都是用于记录排序的数据的信息的，`nums_back`是对未排序前的`nums`的数据的备份，用于实现重新排序的功能。正如注释提到的一样 `nums `指向的内存所有权不是`sorter_t`的而是外部的，需要外界释放内容，但是`nums_back`是此结构体分配的，所以需要自己释放。`min`和`max`分别记录数据中的最大值和最小值，用于后面绘图时使用。type表示被排序的数据类型取值为`SORTER_INT`、`SORTER_FLOAT`、`SORTER_DOUBLE`分别表示int类型，float类型和double类型的数据。
 
-`speed`记录可视化排序过程的快慢，每秒多少步。``frame_cnt`记录从上一步到现在界面刷新了多少帧（多少次画面）。`state`记录排序算法的状态，取值有`SORTER_UNREADY`，表示排序算法为准备好，也就是数据没有被提供；`SORTER_READY`表示排序算法准备好了，下一步可以进行排序；`SORTER_SORTING`表示算法正在排序过程中；`SORTER_PAUSED`表示排序算法被暂停，后续可以恢复继续排序；`SORTER_SORTED`表示排序过程结束，数据已经排好序了。`ascend`表示排序的顺序，升序还是降序，当`ascend`为真表示按照升序排序（也是默认排序方式），当`ascend`为假表示按照降序排序。
+`speed`记录可视化排序过程的快慢，每秒多少步。`frame_cnt`记录从上一步到现在界面刷新了多少帧（多少次画面）。`state`记录排序算法的状态，取值有`SORTER_UNREADY`，表示排序算法为准备好，也就是数据没有被提供；`SORTER_READY`表示排序算法准备好了，下一步可以进行排序；`SORTER_SORTING`表示算法正在排序过程中；`SORTER_PAUSED`表示排序算法被暂停，后续可以恢复继续排序；`SORTER_SORTED`表示排序过程结束，数据已经排好序了。`ascend`表示排序的顺序，升序还是降序，当`ascend`为真表示按照升序排序（也是默认排序方式），当`ascend`为假表示按照降序排序。
 
 函数指针`next_step`用于记录子结构的实现下一步操作的函数的地址；`display`用于实现如何可视化排序的内部情况；`restart`用于重新操作结构体内部变量，实现重新排序的功能；`destroy`用于记录如何释放结构体内存；`save_state`用于存储当前状态到文件里。
 
@@ -156,7 +157,7 @@ typedef struct quick_sorter_t {
 } quick_sorter_t;
 ```
 
-同样的`base`是基类结构体，二维数据`stack`用于记录递归的情况，最大递归深度`STACK_SIZE`为1024，`stack[i][0]`表示递归深度为i时左边界，``stack[i][1]``表示递归深度为i时右边界。``done_list`和`done_size`用于记录哪些下标的元素已经被排好序了，方便可视化时特别展示出来。`state`同样用于记录快速排序的内部状态。`lo`和`hi`记录当前轮快速排序正在处理的元素的左右边界下标分别是多少，`l`和`r`时记录元素划分时左边和右边的下标，`pivot_idx`记录枢纽元的下标是多少。
+同样的`base`是基类结构体，二维数据`stack`用于记录递归的情况，最大递归深度`STACK_SIZE`为1024，`stack[i][0]`表示递归深度为i时左边界，``stack[i][1]``表示递归深度为i时右边界。`done_list`和`done_size`用于记录哪些下标的元素已经被排好序了，方便可视化时特别展示出来。`state`同样用于记录快速排序的内部状态。`lo`和`hi`记录当前轮快速排序正在处理的元素的左右边界下标分别是多少，`l`和`r`时记录元素划分时左边和右边的下标，`pivot_idx`记录枢纽元的下标是多少。
 
 
 
